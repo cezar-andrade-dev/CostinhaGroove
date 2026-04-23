@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Costinha - Soundboard de Piadas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Patrick+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --amarelo: #ffd600;
+        --vermelho: #e53935;
+        --azul: #1565c0;
+        --verde: #2e7d32;
+        --laranja: #f57c00;
+        --roxo: #6a1b9a;
+        --rosa: #c2185b;
+        --bg: #1a1a2e;
+        --card-bg: #16213e;
+        --text: #fff;
+        --radius: 50%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(
+            circle at 15% 20%,
+            rgba(255, 214, 0, 0.08) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 85% 75%,
+            rgba(229, 57, 53, 0.08) 0%,
+            transparent 40%
+          ),
+          url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3C/g%3E%3C/svg%3E");
+        font-family: "Patrick Hand", cursive;
+        color: var(--text);
+        min-height: 100vh;
+        padding-bottom: 40px;
+      }
+
+      /* HEADER */
+      header {
+        text-align: center;
+        padding: 32px 20px 16px;
+        position: relative;
+      }
+
+      .titulo {
+        font-family: "Bangers", cursive;
+        font-size: clamp(3rem, 10vw, 6rem);
+        letter-spacing: 4px;
+        color: var(--amarelo);
+        text-shadow:
+          4px 4px 0 var(--vermelho),
+          8px 8px 0 rgba(0, 0, 0, 0.4);
+        line-height: 1;
+        animation: tituloEntrada 0.8s cubic-bezier(0.36, 1.56, 0.64, 1) both;
+      }
+
+      @keyframes tituloEntrada {
+        from {
+          transform: scale(0.5) rotate(-5deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+      }
+
+      .subtitulo {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 6px;
+        letter-spacing: 1px;
+      }
+
+      .ha-ha {
+        font-family: "Bangers", cursive;
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+        color: var(--amarelo);
+        opacity: 0.5;
+        margin-top: 4px;
+        animation: pisca 2.5s ease-in-out infinite;
+      }
+
+      @keyframes pisca {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* DIVIDER */
+      .divider {
+        width: 80%;
+        max-width: 600px;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--amarelo),
+          var(--vermelho),
+          transparent
+        );
+        margin: 18px auto 28px;
+        border-radius: 2px;
+      }
+
+      /* GRID */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* CARD */
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        animation: cardEntrada 0.5s cubic-bezier(0.36, 1.56, 0.64, 1) both;
+      }
+
+      @keyframes cardEntrada {
+        from {
+          transform: translateY(30px) scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      .btn-audio {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        box-shadow:
+          0 6px 18px rgba(0, 0, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.15);
+        outline: none;
+      }
+
+      .btn-audio::before {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        transition: background 0.15s;
+      }
+
+      .btn-audio:hover {
+        transform: scale(1.12) rotate(-3deg);
+        box-shadow:
+          0 10px 28px rgba(0, 0, 0, 0.6),
+          inset 0 2px 4px rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-audio:active {
+        transform: scale(0.93);
+      }
+
+      .btn-audio.tocando {
+        animation: pulsar 0.4s ease infinite alternate;
+      }
+
+      @keyframes pulsar {
+        from {
+          transform: scale(1.08);
+        }
+        to {
+          transform: scale(1.18);
+        }
+      }
+
+      /* Onda de som ao redor do botão */
+      .btn-audio.tocando::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 3px solid currentColor;
+        animation: onda 0.8s ease-out infinite;
+        opacity: 0.6;
+      }
+
+      @keyframes onda {
+        from {
+          inset: -4px;
+          opacity: 0.7;
+        }
+        to {
+          inset: -18px;
+          opacity: 0;
+        }
+      }
+
+      /* Número do card */
+      .card-numero {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        width: 22px;
+        height: 22px;
+        background: var(--amarelo);
+        color: #111;
+        font-family: "Bangers", cursive;
+        font-size: 0.85rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-label {
+        font-size: 0.78rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.3;
+        max-width: 120px;
+      }
+
+      /* BARRA DE STATUS */
+      #status-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 20, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 2px solid var(--amarelo);
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.9rem;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.36, 1.56, 0.64, 1);
+        z-index: 999;
+      }
+
+      #status-bar.visivel {
+        transform: translateY(0);
+      }
+
+      .status-emoji {
+        font-size: 1.4rem;
+        animation: bounce 0.5s ease infinite alternate;
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-4px);
+        }
+      }
+
+      #status-texto {
+        flex: 1;
+        color: var(--amarelo);
+        font-family: "Patrick Hand", cursive;
+      }
+
+      #btn-parar {
+        background: var(--vermelho);
+        border: none;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: "Patrick Hand", cursive;
+        font-size: 0.9rem;
+        transition: transform 0.1s;
+      }
+
+      #btn-parar:hover {
+        transform: scale(1.08);
+      }
+      #btn-parar:active {
+        transform: scale(0.95);
+      }
+
+      /* Cores por categoria */
+      .cor-0 {
+        background: linear-gradient(135deg, #e53935, #b71c1c);
+        color: #e53935;
+      }
+      .cor-1 {
+        background: linear-gradient(135deg, #f57c00, #e65100);
+        color: #f57c00;
+      }
+      .cor-2 {
+        background: linear-gradient(135deg, #ffd600, #f9a825);
+        color: #ffd600;
+      }
+      .cor-3 {
+        background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        color: #2e7d32;
+      }
+      .cor-4 {
+        background: linear-gradient(135deg, #1565c0, #0d47a1);
+        color: #1565c0;
+      }
+      .cor-5 {
+        background: linear-gradient(135deg, #6a1b9a, #4a148c);
+        color: #6a1b9a;
+      }
+      .cor-6 {
+        background: linear-gradient(135deg, #c2185b, #880e4f);
+        color: #c2185b;
+      }
+      .cor-7 {
+        background: linear-gradient(135deg, #00838f, #006064);
+        color: #00838f;
+      }
+      .cor-8 {
+        background: linear-gradient(135deg, #558b2f, #33691e);
+        color: #558b2f;
+      }
+      .cor-9 {
+        background: linear-gradient(135deg, #4527a0, #311b92);
+        color: #4527a0;
+      }
+
+      /* TOOLTIP */
+      .card:hover .card-label {
+        color: white;
+      }
+
+      /* Confete ao clicar */
+      .confete {
+        position: fixed;
+        pointer-events: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        animation: cair 1s ease-out forwards;
+        z-index: 9999;
+      }
+
+      @keyframes cair {
+        from {
+          opacity: 1;
+          transform: translateY(0) rotate(0deg);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(80px) rotate(720deg);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 14px;
+        }
+        .btn-audio {
+          width: 72px;
+          height: 72px;
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="titulo">COSTINHA!</div>
+      <div class="subtitulo">O Rei da Gargalhada Brasileira</div>
+      <div class="ha-ha">HA HA HA HA HA HA HA</div>
+    </header>
+    <div class="divider"></div>
+
+    <div class="grid" id="grade"></div>
+
+    <div id="status-bar">
+      <span class="status-emoji">🎙️</span>
+      <span id="status-texto">Reproduzindo...</span>
+      <button id="btn-parar" onclick="pararAudio()">■ Parar</button>
+    </div>
+
+    <script>
+      // =============================================
+      // DADOS DAS PIADAS
+      // Substitua os "src" pelos caminhos reais dos seus arquivos de áudio!
+      // Exemplo: src: "audios/piada01.mp3"
+      // =============================================
+      const piadas = [
+        {
+          id: 1,
+          emoji: "😂",
+          label: "Não é possível!",
+          src: "audio/piada01.mp3",
+        },
+        {
+          id: 2,
+          emoji: "🤣",
+          label: "Vou te contar uma coisa...",
+          src: "audio/piada02.mp3",
+        },
+        {
+          id: 3,
+          emoji: "😹",
+          label: "Que situação!",
+          src: "audio/piada03.mp3",
+        },
+        {
+          id: 4,
+          emoji: "🎉",
+          label: "Isso é demais!",
+          src: "audio/piada04.mp3",
+        },
+        {
+          id: 5,
+          emoji: "😆",
+          label: "Minha nossa senhora!",
+          src: "audio/piada05.mp3",
+        },
+        {
+          id: 6,
+          emoji: "🤦",
+          label: "Que negócio danado!",
+          src: "audio/piada06.mp3",
+        },
+        {
+          id: 7,
+          emoji: "😜",
+          label: "Tô rindo à toa!",
+          src: "audio/piada07.mp3",
+        },
+        {
+          id: 8,
+          emoji: "🥴",
+          label: "Misericórdia!",
+          src: "audio/piada08.mp3",
+        },
+        {
+          id: 9,
+          emoji: "🙈",
+          label: "Que vergonha alheia!",
+          src: "audio/piada09.mp3",
+        },
+        {
+          id: 10,
+          emoji: "😅",
+          label: "Tá brincando comigo!",
+          src: "audio/piada10.mp3",
+        },
+        {
+          id: 11,
+          emoji: "😝",
+          label: "Pior que é verdade!",
+          src: "audio/piada11.mp3",
+        },
+        {
+          id: 12,
+          emoji: "🤪",
+          label: "Palhaçada pura!",
+          src: "audio/piada12.mp3",
+        },
+        {
+          id: 13,
+          emoji: "😂",
+          label: "Isso só comigo!",
+          src: "audio/piada13.mp3",
+        },
+        {
+          id: 14,
+          emoji: "🤣",
+          label: "Que confusão!",
+          src: "audio/piada14.mp3",
+        },
+        {
+          id: 15,
+          emoji: "😎",
+          label: "Sou craque nisso!",
+          src: "audio/piada15.mp3",
+        },
+        {
+          id: 16,
+          emoji: "🙃",
+          label: "Tudo ao contrário!",
+          src: "audio/piada16.mp3",
+        },
+        { id: 17, emoji: "😩", label: "Que aperto!", src: "audio/piada17.mp3" },
+        {
+          id: 18,
+          emoji: "🤡",
+          label: "Sou um palhaço!",
+          src: "audio/piada18.mp3",
+        },
+        {
+          id: 19,
+          emoji: "😏",
+          label: "Sabia que ia dar errado!",
+          src: "audio/piada19.mp3",
+        },
+        {
+          id: 20,
+          emoji: "🥳",
+          label: "Tá na hora da festa!",
+          src: "audio/piada20.mp3",
+        },
+        {
+          id: 21,
+          emoji: "😱",
+          label: "Que susto danado!",
+          src: "audio/piada21.mp3",
+        },
+        {
+          id: 22,
+          emoji: "😴",
+          label: "Até dormindo erro!",
+          src: "audio/piada22.mp3",
+        },
+        {
+          id: 23,
+          emoji: "🤓",
+          label: "Com certeza absoluta!",
+          src: "audio/piada23.mp3",
+        },
+        {
+          id: 24,
+          emoji: "😬",
+          label: "Apertei o botão errado!",
+          src: "audio/piada24.mp3",
+        },
+        {
+          id: 25,
+          emoji: "🤗",
+          label: "Que saudade disso!",
+          src: "audio/piada25.mp3",
+        },
+        {
+          id: 26,
+          emoji: "😤",
+          label: "Não aguento mais!",
+          src: "audio/piada26.mp3",
+        },
+        {
+          id: 27,
+          emoji: "🫠",
+          label: "Derreti de rir!",
+          src: "audio/piada27.mp3",
+        },
+        {
+          id: 28,
+          emoji: "🎭",
+          label: "Puro teatro!",
+          src: "audio/piada28.mp3",
+        },
+        {
+          id: 29,
+          emoji: "🃏",
+          label: "Carta na manga!",
+          src: "audio/piada29.mp3",
+        },
+        {
+          id: 30,
+          emoji: "🏆",
+          label: "O melhor de todos!",
+          src: "audio/piada30.mp3",
+        },
+      ];
+
+      // =============================================
+      // ESTADO
+      // =============================================
+      let audioAtual = null;
+      let btnAtual = null;
+
+      // =============================================
+      // RENDERIZAR GRID
+      // =============================================
+      const grade = document.getElementById("grade");
+
+      piadas.forEach((piada, i) => {
+        const corIdx = i % 10;
+        const delay = i * 50 + "ms";
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.animationDelay = delay;
+
+        card.innerHTML = `
+      <button
+        class="btn-audio cor-${corIdx}"
+        id="btn-${piada.id}"
+        onclick="tocarAudio(${piada.id})"
+        title="${piada.label}"
+        aria-label="Piada ${piada.id}: ${piada.label}"
+      >
+        <span class="card-numero">${piada.id}</span>
+        ${piada.emoji}
+      </button>
+      <div class="card-label">${piada.label}</div>
+    `;
+
+        grade.appendChild(card);
+      });
+
+      // =============================================
+      // TOCAR ÁUDIO
+      // =============================================
+      function tocarAudio(id) {
+        const piada = piadas.find((p) => p.id === id);
+        if (!piada) return;
+
+        // Para o áudio anterior
+        if (audioAtual) {
+          audioAtual.pause();
+          audioAtual.currentTime = 0;
+          if (btnAtual) btnAtual.classList.remove("tocando");
+        }
+
+        // Se clicou no mesmo que estava tocando, apenas para
+        if (btnAtual && btnAtual.id === `btn-${id}` && !audioAtual.paused) {
+          esconderStatus();
+          audioAtual = null;
+          btnAtual = null;
+          return;
+        }
+
+        // Cria novo áudio
+        const audio = new Audio(piada.src);
+        audioAtual = audio;
+        btnAtual = document.getElementById(`btn-${id}`);
+        btnAtual.classList.add("tocando");
+
+        // Lança confetes!
+        lancarConfetes(btnAtual);
+
+        // Atualiza status bar
+        document.getElementById("status-texto").textContent =
+          `🎙️ ${piada.id}. ${piada.label}`;
+        document.getElementById("status-bar").classList.add("visivel");
+
+        audio.play().catch(() => {
+          // Arquivo não encontrado — mostra aviso amigável
+          document.getElementById("status-texto").textContent =
+            `⚠️ Coloque o arquivo "piada${String(id).padStart(2, "0")}.mp3" na pasta /audio/`;
+        });
+
+        audio.addEventListener("ended", () => {
+          btnAtual.classList.remove("tocando");
+          esconderStatus();
+          audioAtual = null;
+          btnAtual = null;
+        });
+      }
+
+      function pararAudio() {
+        if (audioAtual) {
+          audioAtual.pause();
+          audioAtual.currentTime = 0;
+          audioAtual = null;
+        }
+        if (btnAtual) {
+          btnAtual.classList.remove("tocando");
+          btnAtual = null;
+        }
+        esconderStatus();
+      }
+
+      function esconderStatus() {
+        document.getElementById("status-bar").classList.remove("visivel");
+      }
+
+      // =============================================
+      // CONFETES
+      // =============================================
+      const coresCfete = [
+        "#FFD600",
+        "#E53935",
+        "#1565C0",
+        "#2E7D32",
+        "#F57C00",
+        "#C2185B",
+        "#fff",
+      ];
+
+      function lancarConfetes(el) {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        for (let i = 0; i < 10; i++) {
+          const c = document.createElement("div");
+          c.className = "confete";
+          c.style.cssText = `
+        left: ${cx + (Math.random() - 0.5) * 60}px;
+        top:  ${cy + (Math.random() - 0.5) * 60}px;
+        background: ${coresCfete[Math.floor(Math.random() * coresCfete.length)]};
+        transform-origin: center;
+        animation-delay: ${Math.random() * 0.2}s;
+      `;
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 1200);
+        }
+      }
+    </script>
+  </body>
+</html>
