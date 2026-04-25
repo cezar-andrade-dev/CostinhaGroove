@@ -16,7 +16,7 @@ costinha-soundboard/
     ├── piada01.mp3
     ├── piada02.mp3
     ├── piada03.mp3
-    └── ... (até piada30.mp3)
+    └── ... (até piada18.mp3)
 ```
 
 ---
@@ -34,7 +34,7 @@ Pronto! Nenhuma instalação necessária. 🎉
 
 ## 🎨 Funcionalidades
 
-- 30 botões circulares, cada um representando uma piada
+- 18 botões circulares, cada um representando uma piada
 - Cores vibrantes que variam entre os botões
 - Animação de pulso enquanto o áudio está tocando
 - Confetes coloridos ao clicar em um botão
