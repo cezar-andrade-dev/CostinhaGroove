@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Costinha - Soundboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Patrick+Hand&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header>
+  <div class="titulo">COSTINHA!</div>
+  <div class="subtitulo">O Rei da Gargalhada Brasileira</div>
+  <div class="ha-ha">HA HA HA HA HA HA HA</div>
+</header>
+<div class="divider"></div>
+
+<!-- Estado de carregamento -->
+<div id="loading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Carregando piadas...</p>
+</div>
+
+<!-- Estado de erro -->
+<div id="erro" class="erro-state" style="display:none">
+  <p>😬 Não foi possível conectar à API.</p>
+  <p>Verifique se o servidor está rodando em <code>http://localhost:3000</code></p>
+  <button onclick="carregarPiadas()">Tentar novamente</button>
+</div>
+
+<!-- Grid de piadas (preenchida via JS) -->
+<div class="grid" id="grade" style="display:none"></div>
+
+<!-- Barra de status -->
+<div id="status-bar">
+  <span class="status-emoji">🎙️</span>
+  <span id="status-texto">Reproduzindo...</span>
+  <button id="btn-parar" onclick="pararAudio()">■ Parar</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
